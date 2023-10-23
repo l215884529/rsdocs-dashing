@@ -35,7 +35,7 @@ fn main() {
     let docset_name = indir.file_name().unwrap().to_str().unwrap().to_owned();
 
     copy_to_builddir(indir, outdir, docset_name.clone());
-    edit_css(&builddir(outdir).join("rustdoc.css"));
+    edit_css(&find_rustdoc_css(&builddir(outdir)));
     write_dashing_json(outdir, docset_name);
 }
 
@@ -53,6 +53,7 @@ fn copy_to_builddir(indir: &Path, outdir: &Path, docset_name: String) {
     copy_html_dependencies(doc_basedir, &builddir, "*.css");
     copy_html_dependencies(doc_basedir, &builddir, "*.js");
     copy_html_dependencies(doc_basedir, &builddir, "*.woff");
+    ::copy_dir::copy_dir(doc_basedir.join("static.files"), builddir.join("static.files")).unwrap();
 }
 
 fn copy_html_dependencies(doc_basedir: &Path, builddir: &Path, pattern: &str) {
@@ -61,6 +62,12 @@ fn copy_html_dependencies(doc_basedir: &Path, builddir: &Path, pattern: &str) {
         let filename = path.file_name().unwrap().clone();
         fs::copy(&path, builddir.join(filename)).unwrap();
     }
+}
+
+fn find_rustdoc_css(builddir: &Path) -> PathBuf {
+    let pattern = builddir.join("static.files").join("rustdoc-*.css");
+    // Exactly one rustdoc-*.css should match, use that.
+    glob::glob(pattern.to_str().unwrap()).unwrap().next().unwrap().unwrap()
 }
 
 fn edit_css(path: &Path) {
