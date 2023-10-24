@@ -115,7 +115,7 @@ checksum = "ad890a5eef7953f55427c50575c680c42841653abd2b028b68cd223d157f62db"
 
 [[package]]
 name = "rsdocs-dashing"
-version = "0.1.1"
+version = "0.1.2"
 dependencies = [
  "copy_dir",
  "docopt",

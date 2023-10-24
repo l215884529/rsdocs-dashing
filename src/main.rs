@@ -54,6 +54,7 @@ fn copy_to_builddir(indir: &Path, outdir: &Path, docset_name: String) {
     copy_html_dependencies(doc_basedir, &builddir, "*.js");
     copy_html_dependencies(doc_basedir, &builddir, "*.woff");
     ::copy_dir::copy_dir(doc_basedir.join("static.files"), builddir.join("static.files")).unwrap();
+    ::copy_dir::copy_dir(doc_basedir.join("src"), builddir.join("src")).unwrap();
 }
 
 fn copy_html_dependencies(doc_basedir: &Path, builddir: &Path, pattern: &str) {
@@ -74,7 +75,7 @@ fn edit_css(path: &Path) {
     let mut file = OpenOptions::new().append(true).open(path).unwrap();
 
     file.write_all(r#"
-.sidebar, .sub, .srclink {
+.sidebar, .sub {
     display: none;
 }
 
