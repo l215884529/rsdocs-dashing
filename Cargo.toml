@@ -6,7 +6,7 @@ description = "Tool to prepare rsdocs for dashing, in order to generate docsets"
 keywords = ["docset", "dashing"]
 license = "MIT OR Apache-2.0"
 repository = "https://github.com/hobofan/rsdocs-dashing"
-version = "0.1.2"
+version = "0.1.3"
 
 [dependencies]
 copy_dir = "0.1.2"

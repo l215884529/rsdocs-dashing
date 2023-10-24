@@ -75,7 +75,7 @@ fn edit_css(path: &Path) {
     let mut file = OpenOptions::new().append(true).open(path).unwrap();
 
     file.write_all(r#"
-.sidebar, .sub {
+.sidebar, nav.sub {
     display: none;
 }
 
